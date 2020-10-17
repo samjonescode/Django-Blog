@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}" class="" />
+    <title>Sam's Django Blog</title>
+  </head>
+  <body>
+    {% if messages %} {% for message in messages %}
+    <div class="alert">{{ message }}</div>
+    {% endfor %} {% endif %}
+    <ul class="nav justify-content-center">
+      <li class="nav-item"></li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'blog-home' %}">Blog Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'blog-about' %}">Blog About</a>
+      </li>
+      <li class="nav-item">
+        {% if user.is_authenticated %}
+        <a href="{% url 'post-new' %}" class="nav-link">Write Post</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'users-profile' %}" class="nav-link">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'django-logout' %}" class="nav-link">Logout</a>
+      </li>
+      {% else %}
+
+      <li class="nav-item">
+        <a href="{% url 'django-login' %}" class="nav-link">Login</a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'users-register' %}" class="nav-link">Register</a>
+      </li>
+      {% endif %}
+    </ul>
+    <div class="container">{% block content %} {% endblock %}</div>
+  </body>
+</html>
